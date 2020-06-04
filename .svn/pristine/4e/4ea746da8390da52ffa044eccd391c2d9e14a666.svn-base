@@ -1,0 +1,209 @@
+create table ifsapp.dps_user_config_tab
+(
+userid varchar2(100),
+allow_config_id varchar2(100),
+updated_by varchar2(100),
+updated_on date default sysdate,
+CONSTRAINT DPS_USER_CONFIG_PK PRIMARY KEY (userid,allow_config_id) USING INDEX TABLESPACE IFSAPP_INDEX
+) TABLESPACE IFSAPP_DATA; 
+
+INSERT INTO ifsapp.dps_user_config_tab VALUES ('BNSSOP','PTYPE3','IFSAPP',SYSDATE);
+
+CREATE TABLE ifsapp.DPS_PROD_CAT_MASTER_TAB
+    ( 
+      prod_cat_id varchar2(45) NOT NULL,  
+      prod_cat_name varchar2(500)  NOT NULL,
+      prod_cat_desc varchar2(500),
+      status varchar2(50) NOT NULL,
+      updated_by varchar2(50),
+      updated_on  DATE,
+     CONSTRAINT DPS_PROD_CAT_MASTER_pk PRIMARY KEY (prod_cat_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    ) TABLESPACE IFSAPP_DATA;
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values('P_CAT1','Generics','Generics','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT2','Parallel Import','Parallel Import','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT3','OTC','OTC','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT4','Dressings','Dressings','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT5','Control Drugs','Control Drugs','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT6','Fridge Lines','Fridge Lines','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT7','Specials Drug Tariff','Specials Drug Tariff','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT8','Specials Non-Drug Tariff','Specials Non-Drug Tariff','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT9','Special Obtains','Special Obtains','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_CAT_MASTER_TAB(  prod_cat_id,prod_cat_name,prod_cat_desc,status,updated_by,updated_on)
+values( 'P_CAT10','NP8','NP8','active','BNSSOP',systimestamp);
+
+CREATE TABLE ifsapp.DPS_PROD_TYPE_TAB
+    ( 
+      prod_type_id varchar2(45) NOT NULL,  
+      prod_type_name varchar2(500)  NOT NULL,
+      prod_type_desc varchar2(500),
+      status varchar2(50) NOT NULL,
+      updated_by varchar2(50),
+      updated_on  DATE,
+      CONSTRAINT DPS_PROD_TYPE_pk PRIMARY KEY (prod_type_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    )TABLESPACE IFSAPP_DATA;
+	insert into ifsapp.DPS_PROD_TYPE_TAB(prod_type_id,prod_type_name,prod_type_desc,status,updated_by,updated_on)
+values('P_TYPE1','Category Wise','Category Wise','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_TYPE_TAB(prod_type_id,prod_type_name,prod_type_desc,status,updated_by,updated_on)
+values('P_TYPE2','NCSO','NCSO','active','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_PROD_TYPE_TAB(prod_type_id,prod_type_name,prod_type_desc,status,updated_by,updated_on)
+values('P_TYPE3','Profitable Lines','Profitable Lines','active','BNSSOP',systimestamp);
+
+ CREATE TABLE ifsapp.DPS_COLOR_CODE_TAB
+    (  
+      color_id varchar2(45) NOT NULL,
+      color_code varchar2(45) NOT NULL,
+      color_name varchar2(50)  NOT NULL,
+      status varchar2(50) NOT NULL,
+      updated_by varchar2(50),
+      updated_on  DATE,
+      CONSTRAINT DPS_COLOR_CODE_pk PRIMARY KEY (color_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    )TABLESPACE IFSAPP_DATA;
+
+	
+	insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL1','#FFFFFF','White','active','BNSSOP',systimestamp);
+
+ CREATE TABLE ifsapp.DPS_STOCK_CAT_MASTER_TAB
+    (  
+      STOCK_CAT_id varchar2(45) NOT NULL,
+      STOCK_CAT_name varchar2(500)  NOT NULL,
+      STOCK_CAT_desc varchar2(500)  NOT NULL,
+      status varchar2(50) NOT NULL,
+      STOCK_CAT_color_id varchar2(50),
+      updated_by varchar2(50),
+      updated_on  DATE,
+      CONSTRAINT DPS_STOCK_CAT_MASTER_pk PRIMARY KEY (STOCK_CAT_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    )TABLESPACE IFSAPP_DATA;
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT1','Overstock','Overstock','active','COL1','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT2','Healthy Stock Level','Healthy Stock Level','active','COL2','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT3','Low Stock Level','Low Stock Level','active','COL3','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT4','Buffer Stock Level','Buffer Stock Level','active','COL4','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT5','Out Stock Level','Out Stock Level','active','COL5','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT6','Short-Dated','Short-Dated','active','COL6','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT7','Lead Time','Lead Time','active','COL7','BNSSOP',systimestamp);
+	insert into ifsapp.DPS_STOCK_CAT_MASTER_TAB(STOCK_CAT_id,STOCK_CAT_name,STOCK_CAT_desc,status,STOCK_CAT_color_id,updated_by,updated_on)
+values('STK_CAT8','Rate Of Sale','Rate Of Sale','active','COL1','BNSSOP',systimestamp);
+
+CREATE TABLE ifsapp.DPS_USER_DETAILS_TAB
+    ( 
+      user_id varchar2(45) NOT NULL,  
+      user_name varchar2(50)  NOT NULL,
+      email_id varchar2(50),
+      address varchar2(500),
+      phone_no varchar2(50),
+      dept_id varchar2(50),
+      updated_by varchar2(50),
+      updated_on  DATE,
+      CONSTRAINT DPS_USER_DETAILS_pk PRIMARY KEY (user_id,email_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    )TABLESPACE IFSAPP_DATA;
+    
+    CREATE TABLE ifsapp.DPS_USER_TAB
+    (  
+    user_id varchar2(45) NOT NULL,
+      email_id varchar2(45) NOT NULL,
+      password varchar2(45) NOT NULL,
+      status varchar2(45)  NOT NULL,
+	  user_role_id varchar2(50),
+      updated_by varchar2(50),
+      updated_on  DATE,
+      CONSTRAINT DPS_USER_pk PRIMARY KEY (user_id,email_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    )TABLESPACE IFSAPP_DATA;
+	
+
+
+CREATE TABLE ifsapp.DPS_ROLE_TAB
+    ( 
+      role_id varchar2(45) NOT NULL,  
+      role_name varchar2(100)  NOT NULL,
+      status varchar2(50) NOT NULL,
+      updated_by varchar2(50),
+      updated_on  DATE,
+      CONSTRAINT DPS_ROLE_pk PRIMARY KEY (role_id) USING INDEX TABLESPACE IFSAPP_INDEX
+    )TABLESPACE IFSAPP_DATA;
+	
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_PROD_CAT_MASTER_TAB to DPS_COM;
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_PROD_TYPE_TAB to DPS_COM;
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_COLOR_CODE_TAB to DPS_COM;
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_STOCK_CAT_MASTER_TAB to DPS_COM;
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_USER_DETAILS_TAB to DPS_COM;
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_USER_TAB to DPS_COM;
+GRANT SELECT,INSERT,UPDATE,DELETE on ifsapp.DPS_ROLE_TAB to DPS_COM;
+
+
+GRANT DPS_COM to BNSSOP;
+
+select * from ifsapp.DPS_PROD_CAT_MASTER_TAB;
+select * from ifsapp.DPS_PROD_TYPE_TAB;
+select * from ifsapp.DPS_COLOR_CODE_TAB;
+select * from ifsapp.DPS_STOCK_CAT_MASTER_TAB;
+select * from ifsapp.DPS_USER_DETAILS_TAB;
+select * from ifsapp.DPS_USER_TAB;
+select * from ifsapp.DPS_ROLE_TAB;
+
+
+insert into ifsapp.DPS_ROLE_TAB values ('ROLE01','ADMIN','active','ifsapp',sysdate);
+insert into ifsapp.DPS_ROLE_TAB values ('ROLE02','BUYER','active','ifsapp',sysdate);
+
+
+grant select on pricematrix to DPS_COM;
+
+
+
+CREATE TABLE ifsapp.DPS_PROD_PARAM_MASTER_TAB
+    ( 
+      transaction_id varchar2(45) NOT NULL,  
+      REF_PROD_CAT_ID varchar2(45) not null,
+      CATALOG_NO varchar2(45),
+      updated_by varchar2(50),
+      updated_on  DATE,
+      status varchar2(50)
+    ) TABLESPACE IFSAPP_DATA;
+    grant select,insert,update,delete on ifsapp.DPS_PROD_PARAM_MASTER_TAB to DPS_COM;
+
+CREATE TABLE ifsapp.DPS_PROD_PARAM_DETAIL_TAB
+    ( 
+      transaction_id varchar2(45) NOT NULL,  
+      STK_CAT_ID varchar2(45)  NOT NULL,
+      stk_cat_from number,
+      stk_cat_to number,
+      updated_by varchar2(50),
+      updated_on  DATE
+    ) TABLESPACE IFSAPP_DATA;
+    grant select,insert,update,delete on ifsapp.DPS_PROD_PARAM_DETAIL_TAB to DPS_COM;
+    
+
+CREATED BY MEHUL : SEQUENCE
+===========================================     
+CREATE SEQUENCE DPS_TRANSACTION_SEQ INCREMENT BY 1 START WITH 1000   NOMINVALUE    NOMAXVALUE    NOCYCLE    NOCACHE ;
+GRANT SELECT ON DPS_TRANSACTION_SEQ TO DPS_COM;
+
+select to_char(ifsapp.DPS_TRANSACTION_SEQ.NEXTVAL) TransactionID from dual;
+
+insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL2','#76C880','Green','active','BNSSOP',systimestamp);
+insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL3','#E3C94B','Amber','active','BNSSOP',systimestamp);
+insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL4','#00B0F0','Blue','active','BNSSOP',systimestamp);
+insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL5','#F73414','Red','active','BNSSOP',systimestamp);
+insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL6','#212121','Black','active','BNSSOP',systimestamp);
+insert into ifsapp.DPS_COLOR_CODE_TAB(color_id,color_code,color_name,status,updated_by,updated_on)
+values('COL7','#F77E14','Orange','active','BNSSOP',systimestamp);

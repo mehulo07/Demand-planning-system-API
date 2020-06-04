@@ -1,0 +1,136 @@
+package com.v1.DemandPlanningService.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.v1.DemandPlanningService.bean.ProductInfo;
+import com.v1.DemandPlanningService.bean.ProductParamMaster;
+import com.v1.DemandPlanningService.constant.DpsConstant;
+import com.v1.DemandPlanningService.dto.ProductSeattingSearch;
+import com.v1.DemandPlanningService.dto.Response;
+import com.v1.DemandPlanningService.service.ProductSettingService;
+import com.v1.DemandPlanningService.tokenutility.JwtTokenUtil;
+
+@Controller
+@RequestMapping({"/user/v1/DPS/productsetting"})
+public class ProductSettingController {
+
+	private static final Logger logger = Logger.getLogger(ProductSettingController.class);
+	
+	@Autowired
+	private ProductSettingService productSettingService;
+
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
+	@PostMapping({"/getProductSettingConfig"})
+	@ResponseBody
+	/*public Response getProductSettingDetails(@Valid  @RequestBody Request request , BindingResult result) {*/
+	public Response getProductSettingDetails(@RequestHeader("Authorization") String token) {
+		logger.info("(getProductSettingDetails) Execution start");
+		Response returnObject =new Response();
+		System.out.println("request is :"+token);
+		String customerId = null;
+		
+		try {
+			customerId = jwtTokenUtil.getUsernameFromToken(token);
+			returnObject = productSettingService.getProductSettingDetailsService(customerId);
+			returnObject.setStatusCode(DpsConstant.SUCCESS_CODE);
+			returnObject.setStatusMessage(DpsConstant.SUCCESS_MESSAGE);
+		}catch(Exception e) {
+			returnObject.setStatusCode(DpsConstant.CLIENT_ERROR_CODE);
+			returnObject.setStatusMessage(DpsConstant.ERROR_MESSAGE);
+		}
+		
+		return returnObject;
+	}
+
+	
+	@PostMapping({"/search"})
+	@ResponseBody
+	public Response ProductCategoryParamList(@RequestBody ProductSeattingSearch productSeattingSearch) {
+		logger.info("(getProductParamList) Execution start");
+		Response response = new Response();
+		try {
+			productSettingService.ProductCategoryParamList(productSeattingSearch , response);
+		}catch(Exception e) {
+			response.setStatusCode(DpsConstant.CLIENT_ERROR_CODE);
+			response.setStatusMessage(DpsConstant.ERROR_MESSAGE);
+			response.setObject((Object)DpsConstant.EXCEPTION_WHILE_DATA_FATCHING);
+			System.out.println("Exception in controller");
+			e.printStackTrace();
+		}
+		return response;
+	}
+	
+	
+	@PostMapping({"/getProductList"})
+	@ResponseBody
+	public Response getProductList(@RequestParam(name= "productDesc") String productDesc ,@RequestParam(name= "category") String category 
+			,@RequestParam(name= "contract") String contract , @RequestParam(name= "limit") int limit) {
+		logger.info("(getProductList) Execution start");
+		Response returnObject =new Response();
+		List<ProductInfo> productList = null;
+		ProductInfo productInfoBean = new ProductInfo();
+		productInfoBean.setProductDesc(productDesc);
+		productInfoBean.setCategory(category);
+		productInfoBean.setContract(contract);
+		
+		try {
+			productList = productSettingService.getProductListService(productInfoBean, limit);
+			
+			if(productList != null) {
+				returnObject.setStatusCode(DpsConstant.SUCCESS_CODE);
+				returnObject.setStatusMessage(DpsConstant.SUCCESS_MESSAGE);
+				returnObject.setObject((Object)productList);
+			}else {
+				returnObject.setStatusCode(DpsConstant.CLIENT_ERROR_CODE);
+				returnObject.setStatusMessage(DpsConstant.ERROR_MESSAGE);
+				returnObject.setObject((Object)DpsConstant.EXCEPTION_WHILE_DATA_FATCHING);	
+			}
+		}catch(Exception e) {
+			returnObject.setStatusCode(DpsConstant.CLIENT_ERROR_CODE);
+			returnObject.setStatusMessage(DpsConstant.ERROR_MESSAGE);
+			returnObject.setObject((Object)productList);
+			
+		}
+		
+		logger.info("(getProductList) Execution over");
+		return returnObject;
+		
+	}
+	
+	//productsetting
+	@PostMapping({"/save"})
+	@ResponseBody
+	public Response saveCategoryProductParam(@Valid @RequestBody ProductParamMaster productParamMasterBean , BindingResult result) {
+		logger.info("(actionOnProductSetting) Execution Start");
+		
+		Response  responseBean= new Response();
+		
+		if(!result.hasErrors()) {
+			 productSettingService.saveCategoryProductParam(productParamMasterBean , responseBean);
+		}else {
+			responseBean.setStatusCode(DpsConstant.CLIENT_ERROR_CODE);
+			responseBean.setStatusMessage(DpsConstant.ERROR_MESSAGE);
+			responseBean.setObject((Object)"");
+		}
+		
+		return responseBean;
+	}
+	
+	
+}
